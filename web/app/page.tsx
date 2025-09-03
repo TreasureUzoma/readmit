@@ -58,9 +58,7 @@ export default function Home() {
             </div>
 
             <div className="mt-6"># Generate documentation</div>
-            <div className="text-green-500">
-              $ readmit generate --type readme
-            </div>
+            <div className="text-green-500">$ readmit generate readme</div>
             <div className="mt-2">✓ Analyzing codebase...</div>
             <div>✓ Generated README.md</div>
           </div>

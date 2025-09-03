@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai"
 export const systemPrompts = {
   readme: `You are a helpful assistant that generates a professional README file based on the provided project content.`,
   dockerfile: `You are a helpful assistant that generates a Dockerfile tailored to the provided project content.`,
-  commits: `You are a helpful assistant that suggests meaningful Git commit messages for the provided project content.`,
+  commit: `You are a helpful assistant that suggests meaningful Git commit messages for the provided project content.`,
   contributionmd: `You are a helpful assistant that generates a CONTRIBUTING.md file based on the provided project content.`,
 }
 
@@ -22,8 +22,6 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
   if (!systemInstruction) {
     throw new Error(`Unsupported mode: ${mode}`)
   }
-
-  const isUrl = input.startsWith("http://") || input.startsWith("https://")
 
   const response = await ai.models.generateContent({
     model: "gemini-2.5-flash",

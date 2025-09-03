@@ -2,202 +2,123 @@ package cmd
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
-	"io"
 	"log"
-	"net/http"
 	"os"
+	"readmit/cmd/remote"
 	"readmit/controllers"
+	"readmit/gitreader"
+	"readmit/utils"
 	"strings"
-
-	"crypto/rand"
-	"encoding/hex"
 
 	"github.com/spf13/cobra"
 )
 
-var fileType string
-
 var generateCmd = &cobra.Command{
-	Use:   "generate",
-	Short: "Generates Readme or other files",
+	Use:   "generate [type]",
+    Short: "Generate files like README, CONTRIBUTION guide, or commit messages",
+    Long: `Supported types:
+     - readme         Generates README.md
+     - contribution   Generates CONTRIBUTION.md
+     - commit         Suggests commit message (printed to console)
+      - other          Creates <other>-<uuid>.txt`,
+    Example: `  readmit generate readme
+                readmit generate contribution
+                readmit generate commit`,
+	Args:  cobra.ExactArgs(1), 
 	Run: func(cmd *cobra.Command, args []string) {
-		log.Println("[INFO] Starting generate command...")
+        
+		fileType := strings.ToLower(args[0])
+        validTypes := map[string]bool{"readme": true, "contribution": true, "commit": true}
+        if !validTypes[fileType] {
+         log.Printf("[ERROR] Unsupported type: %s (valid: readme, contribution, commit)", fileType)
+        }
 
-		if fileType == "" {
-			log.Fatal("[ERROR] --type flag is required")
+		uuid, err := utils.GenerateUUID()
+		if err != nil {
+			log.Printf("[ERROR] Failed to generate UUID: %v", err)
 		}
+		fileName := fmt.Sprintf("%s-%s.txt", fileType, uuid)
 
-		var contentMap = controllers.ReadFiles()
-		var contentBuilder strings.Builder
+		var fileBuffer *bytes.Buffer
 
-		for filename, fileContent := range contentMap {
-			contentBuilder.WriteString(fmt.Sprintf("=== %s ===\n", filename))
-			contentBuilder.WriteString(fileContent)
-			contentBuilder.WriteString("\n\n")
-		}
-
-		fileBuffer := bytes.NewBufferString(contentBuilder.String())
-
-		log.Println("[INFO] File created in memory")
-
-		var fileName string
+		// case commit: Commit generation -> diff + codebase
 		if fileType == "commit" {
-			fileName = "temp-commit.txt"
-		} else {
-			uuid, err := generateUUID()
+			diffContent, err := gitreader.GetBestDiff()
 			if err != nil {
-				log.Fatalf("[ERROR] Failed to generate UUID: %v", err)
+				log.Printf("[ERROR] %v", err)
 			}
-			fileName = fmt.Sprintf("%s-%s.txt", strings.ToLower(fileType), uuid)
+
+			if diffContent == "" {
+				log.Println("[INFO] No diffs found (staged, unstaged, or last commit).")
+				return
+			}
+
+			// Include diff + codebase in buffer
+			var builder strings.Builder
+			builder.WriteString("=== GIT DIFF ===\n")
+			builder.WriteString(diffContent)
+			builder.WriteString("\n\n=== CODEBASE ===\n")
+
+			contentMap := controllers.ReadFiles()
+			for filename, fileContent := range contentMap {
+				builder.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", filename, fileContent))
+			}
+
+			fileBuffer = bytes.NewBufferString(builder.String())
+		} else {
+			// Case 2: Other file types -> just codebase
+			var contentBuilder strings.Builder
+			contentMap := controllers.ReadFiles()
+			for filename, fileContent := range contentMap {
+				contentBuilder.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", filename, fileContent))
+			}
+			fileBuffer = bytes.NewBufferString(contentBuilder.String())
 		}
 
-		signedUrl, err := getSignedUrl(fileName)
+		// Upload file
+		signedUrl, err := remote.GetSignedUrl(fileName)
 		if err != nil {
-			log.Printf("[ERROR] Failed to get signed URL: %v\n", err)
-			return
+			log.Printf("[ERROR] Failed to get signed URL: %v", err)
 		}
-		log.Printf("[INFO] Signed URL obtained: %s\n", signedUrl)
 
-		if err := uploadFile(signedUrl, fileBuffer); err != nil {
-			log.Printf("[ERROR] Failed to upload file: %v\n", err)
-			return
+		if err := remote.UploadFile(signedUrl, fileBuffer); err != nil {
+			log.Printf("[ERROR] Failed to upload file: %v", err)
 		}
-		log.Println("[INFO] File uploaded successfully")
 
-		generatedContent, err := callGenerateAPI(fileName, fileType)
+		// Call API
+		generatedContent, err := remote.CallGenerateAPI(fileName, fileType)
 		if err != nil {
-			log.Printf("[ERROR] Generate API failed: %v\n", err)
-			log.Println("[INFO] Attempting to restore original state...")
-			return
+			log.Printf("[ERROR] Generate API failed: %v", err)
 		}
-		log.Println("[INFO] Generate API call successful")
 
+		// Handle output
 		switch fileType {
 		case "readme":
-			fileName = "README.md"
-			err = os.WriteFile(fileName, []byte(generatedContent), 0644)
-			if err != nil {
-				log.Printf("[ERROR] Failed to write file locally: %v\n", err)
-				return
+			if err := os.WriteFile("README.md", []byte(generatedContent), 0644); err != nil {
+				log.Printf("[ERROR] Failed to write README.md: %v", err)
 			}
-			log.Printf("[INFO] README.md created successfully")
-			log.Printf("[INFO] %s generation complete", fileType)
+			log.Println("[SUCCESS] README.md created successfully")
 
 		case "contribution":
-			fileName = "CONTRIBUTION.md"
-			err = os.WriteFile(fileName, []byte(generatedContent), 0644)
-			if err != nil {
-				log.Printf("[ERROR] Failed to write file locally: %v\n", err)
-				return
+			if err := os.WriteFile("CONTRIBUTION.md", []byte(generatedContent), 0644); err != nil {
+				log.Printf("[ERROR] Failed to write CONTRIBUTION.md: %v", err)
 			}
-			log.Printf("[INFO] CONTRIBUTION.md created successfully")
-			log.Printf("[INFO] %s generation complete", fileType)
+			log.Println("[SUCCESS] CONTRIBUTION.md created successfully")
 
 		case "commit":
 			fmt.Println(generatedContent)
-			log.Println("[INFO] Commit message printed to console.")
-			log.Printf("[INFO] %s generation complete", fileType)
+			log.Println("[SUCCESS] Commit message printed to console.")
 
 		default:
-			log.Println("[INFO] Unknown file type, writing to default file.")
-			err = os.WriteFile(fileName, []byte(generatedContent), 0644)
-			if err != nil {
-				log.Printf("[ERROR] Failed to write file locally: %v\n", err)
-				return
+			if err := os.WriteFile(fileName, []byte(generatedContent), 0644); err != nil {
+				log.Printf("[ERROR] Failed to write file locally: %v", err)
 			}
-			log.Printf("[INFO] %s created successfully at %s", fileType, fileName)
-			log.Printf("[INFO] %s generation complete", fileType)
+			log.Printf("[SUCCESS] %s created at %s", fileType, fileName)
 		}
 	},
 }
 
 func init() {
-	generateCmd.Flags().StringVarP(&fileType, "type", "t", "", "Type of file to generate (readme, contribution, commit, etc.)")
 	rootCmd.AddCommand(generateCmd)
-}
-
-func generateUUID() (string, error) {
-	uuid := make([]byte, 16)
-	_, err := rand.Read(uuid)
-	if err != nil {
-		return "", err
-	}
-	return hex.EncodeToString(uuid), nil
-}
-
-func getSignedUrl(fileName string) (string, error) {
-	body := fmt.Sprintf(`{"path":"%s"}`, fileName)
-	resp, err := http.Post("http://localhost:3000/api/upload-url", "application/json", strings.NewReader(body))
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("signed URL API returned %d", resp.StatusCode)
-	}
-
-	var data struct {
-		SignedUrl string `json:"uploadUrl"`
-	}
-	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		return "", err
-	}
-
-	return data.SignedUrl, nil
-}
-
-func uploadFile(url string, fileBuffer *bytes.Buffer) error {
-	req, err := http.NewRequest("PUT", url, fileBuffer)
-	if err != nil {
-		return err
-	}
-	req.Header.Set("Content-Type", "text/plain")
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 && resp.StatusCode != 201 {
-		b, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("upload failed: %s", string(b))
-	}
-	return nil
-}
-
-func callGenerateAPI(fileName, mode string) (string, error) {
-	body := fmt.Sprintf(`{"fileName":"%s","mode":"%s"}`, fileName, mode)
-	log.Printf("[INFO] Sending request body: %s", body)
-
-	resp, err := http.Post("http://localhost:3000/api/generate", "application/json", strings.NewReader(body))
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		b, _ := io.ReadAll(resp.Body)
-		return "", fmt.Errorf("generate API error: %s", string(b))
-	}
-
-	var data map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-		return "", err
-	}
-
-	if content, ok := data[mode].(string); ok {
-		return content, nil
-	}
-
-	if nestedResult, ok := data[mode].(map[string]interface{}); ok {
-		if content, ok := nestedResult["text"].(string); ok {
-			return content, nil
-		}
-	}
-
-	return "", fmt.Errorf("generated content not found or is not a string for mode '%s'", mode)
 }

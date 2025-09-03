@@ -1,6 +1,5 @@
 /*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2025 Readmit
 */
 package cmd
 
@@ -10,42 +9,37 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
-
-// rootCmd represents the base command when called without any subcommands
+// rootCmd is the base command for the Readmit CLI.
 var rootCmd = &cobra.Command{
 	Use:   "readmit",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "AI-powered file and commit generator for your projects",
+	Long: `Readmit helps you quickly generate common project files and commit messages 
+using AI. It analyzes your codebase and Git history to produce:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+- README.md
+- CONTRIBUTION.md
+- Commit messages (based on git diffs)
+- Custom text files (design-doc, changelog, etc.)
+
+Examples:
+  readmit generate readme
+  readmit generate contribution
+  readmit generate commit
+  readmit generate design-doc
+`,
+	SilenceUsage:  true,
+	SilenceErrors: true,
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+// Execute runs the root command.
 func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.readmit.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// Remove the placeholder toggle flag
+	// Add global flags here if needed later
+	// Example: verbose logging, custom config file, etc.
 }
-
-
