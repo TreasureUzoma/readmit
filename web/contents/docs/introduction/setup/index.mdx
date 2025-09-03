@@ -1,0 +1,60 @@
+---
+title: Setup
+description: Setting up and configuring SupaMetrics to your project project
+keywords:
+  ["setup", "configuration", "layout", "SEO", "nextjs", "reactjs", "supametrics"]
+---
+
+Setting up your analytics with supametrics is straightforward.
+
+## Creating a Project
+
+To get started, create an account and click the **+** button in the top navigation bar to create a new project. Fill in the required details and obtain your tracking ID.
+
+Your tracking ID is publicly accessible but restricted to the domains you've configured.
+
+## Integrating SupaMetrics
+
+### React.js & Next.js Setup
+
+For **React.js** users, navigate to your **src/main.jsx** file and import the **SupaMetrics** component:
+
+```tsx showLineNumbers
+import { StrictMode } from 'react';
+import App from './App.jsx';
+import { Analytics } from 'supametrics';
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Analytics client="your-tracking-id"/>
+    <App />
+  </StrictMode>
+);
+```
+
+For **Next.js** users, add the **SupaMetrics** component inside your global layout file:
+
+```tsx showLineNumbers
+import { Analytics } from "supametrics";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <Analytics client="your-tracking-id"/>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+### HTML Setup
+
+If you're using plain HTML, simply insert the following script inside the `<head>` section of your document:
+
+```html showLineNumbers
+<script src="https://supametrics.com/get/v1/analytics?id=your-tracking-id"></script>
+```
+
+Now your SupaMetrics analytics integration is set up successfully! You should start seeing real-time data in your dashboard.
