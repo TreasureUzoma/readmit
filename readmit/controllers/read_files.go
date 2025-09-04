@@ -1,13 +1,16 @@
 package controllers
 
 import (
+	"bytes"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/treasureuzoma/readmit/readmit/utils"
 )
 
+// matchIgnore checks if a path matches any of the ignore patterns
 func matchIgnore(path string, patterns []string) bool {
 	for _, pattern := range patterns {
 		if ok, _ := filepath.Match(pattern, filepath.Base(path)); ok {
@@ -20,6 +23,31 @@ func matchIgnore(path string, patterns []string) bool {
 	return false
 }
 
+// getGitUser fetches Git user.name and user.email from local config
+func getGitUser() map[string]string {
+	user := map[string]string{
+		"name":  "",
+		"email": "",
+	}
+
+	// git config user.name
+	nameCmd := exec.Command("git", "config", "user.name")
+	nameOut, err := nameCmd.Output()
+	if err == nil {
+		user["name"] = string(bytes.TrimSpace(nameOut))
+	}
+
+	// git config user.email
+	emailCmd := exec.Command("git", "config", "user.email")
+	emailOut, err := emailCmd.Output()
+	if err == nil {
+		user["email"] = string(bytes.TrimSpace(emailOut))
+	}
+
+	return user
+}
+
+// ReadFiles reads all files recursively (respecting ignore patterns) and adds Git user info
 func ReadFiles() map[string]string {
 	filesData := make(map[string]string)
 
@@ -51,15 +79,16 @@ func ReadFiles() map[string]string {
 			return nil
 		}
 
-		// store file -> contents
 		filesData[relPath] = string(data)
-
 		return nil
 	})
 
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	gitUser := getGitUser()
+	filesData["__userdata__"] = "name: " + gitUser["name"] + "\nemail: " + gitUser["email"]
 
 	return filesData
 }
