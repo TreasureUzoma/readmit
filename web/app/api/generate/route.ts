@@ -46,8 +46,11 @@ export async function POST(req: NextRequest) {
       fileUrl: signedUrl,
       [mode]: result,
     })
-  } catch (err: any) {
-    console.error("API handler error:", err)
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch {
+    console.error("API handler error:")
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    )
   }
 }

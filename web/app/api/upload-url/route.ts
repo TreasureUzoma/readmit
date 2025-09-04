@@ -43,8 +43,11 @@ export async function POST(req: NextRequest) {
       path: data.path,
       token: data.token,
     })
-  } catch (err: any) {
-    console.error("[Server Error]", err)
-    return NextResponse.json({ error: err.message }, { status: 500 })
+  } catch {
+    console.error("[Server Error]")
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    )
   }
 }
