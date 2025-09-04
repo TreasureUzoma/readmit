@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   try {
     console.log("[INFO] POST /api/signed-url called")
 
-    let body: any
+    let body: { path?: string }
     try {
       body = await req.json()
       console.log("[INFO] Request body:", body)
