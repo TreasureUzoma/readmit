@@ -1,4 +1,4 @@
-export const url = "https://supametricsdocs.vercel.app"
+export const url = "https://readmit.vercel.app"
 export const siteicon = "/images/icon.png"
 
 export const gtm = "GTM-XXXXXXX"
