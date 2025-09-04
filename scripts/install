@@ -1,0 +1,28 @@
+set -e
+
+VERSION=${VERSION:-latest}
+OWNER=TreasureUzoma
+REPO=readmit
+
+echo "Installing $REPO ($VERSION)..."
+
+if [ "$VERSION" = "latest" ]; then
+  VERSION=$(curl -s https://api.github.com/repos/$OWNER/$REPO/releases/latest \
+    | grep tag_name | cut -d '"' -f 4)
+fi
+
+OS=$(uname | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
+
+if [ "$ARCH" = "x86_64" ]; then ARCH=amd64; fi
+if [ "$ARCH" = "aarch64" ]; then ARCH=arm64; fi
+
+TARBALL="$REPO-$VERSION-$OS-$ARCH.tar.gz"
+URL="https://github.com/$OWNER/$REPO/releases/download/$VERSION/$TARBALL"
+
+curl -fsSL "$URL" -o "$TARBALL"
+tar -xzf "$TARBALL"
+sudo mv $REPO /usr/local/bin/
+rm "$TARBALL"
+
+echo "Installed $REPO $VERSION to /usr/local/bin"
