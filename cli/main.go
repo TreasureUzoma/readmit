@@ -3,7 +3,7 @@ Copyright © 2025 TREASURE UZOMA <EMAIL ADDRESS>
 */
 package main
 
-import "readmit/cmd"
+import "github.com/treasureuzoma/readmit/cli/cmd"
 
 func main() {
 	cmd.Execute()

@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"readmit/cmd/remote"
-	"readmit/controllers"
-	"readmit/gitreader"
-	"readmit/utils"
 	"strings"
+
+	"github.com/treasureuzoma/readmit/cli/cmd/remote"
+	"github.com/treasureuzoma/readmit/cli/controllers"
+	"github.com/treasureuzoma/readmit/cli/gitreader"
+	"github.com/treasureuzoma/readmit/cli/utils"
 
 	"github.com/spf13/cobra"
 )

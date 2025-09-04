@@ -4,7 +4,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"readmit/utils"
+
+	"github.com/treasureuzoma/readmit/cli/utils"
 )
 
 func matchIgnore(path string, patterns []string) bool {

@@ -47,17 +47,11 @@ export default function Home() {
 
           {/* Code Example */}
           <div className="bg-muted text-muted-foreground p-6 rounded-xl font-mono text-left max-w-2xl mx-auto mb-16 shadow-sm">
-            <div className="mb-2"># Install readmit (macOS / Linux)</div>
+            <div className="mb-2"># Install readmit</div>
             <div className="text-green-500">
-              $ curl -fsSL https://readmit.vercel.app/install | bash
+              $ go install github.com/treasureuzoma/readmit/cli@latest
             </div>
-
-            <div className="mt-4"># Install readmit (Windows PowerShell)</div>
-            <div className="text-green-500">
-              PS&gt; irm https://readmit.vercel.app/install.ps1 | iex
-            </div>
-
-            <div className="mt-6"># Generate documentation</div>
+            <div className="mt-4"># Generate documentation</div>
             <div className="text-green-500">$ readmit generate readme</div>
             <div className="mt-2">✓ Analyzing codebase...</div>
             <div>✓ Generated README.md</div>

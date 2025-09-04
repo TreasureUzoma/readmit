@@ -1,4 +1,4 @@
-module readmit
+module github.com/treasureuzoma/readmit/cli
 
 go 1.25.0
 
