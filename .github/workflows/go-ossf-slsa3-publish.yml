@@ -3,16 +3,16 @@ name: SLSA Go releaser
 on:
   workflow_dispatch:
   release:
-    types: [published]
+    types: [created]
 
 permissions:
   contents: write
   id-token: write
-  actions: read
 
 jobs:
   build:
     uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v2.0.0
     with:
       go-version: "1.25"
-      config-file: .slsa-goreleaser.yml
+      config-file: ./.github/slsa-goreleaser.yml
+      source-dir: ./cli
