@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       .from("codebases")
       .createSignedUrl(fileName, 60)
 
-    if (error) {
+    if (error || !data?.signedUrl) {
       console.error("Supabase createSignedUrl error:", error)
       return NextResponse.json(
         { error: "Failed to create signed URL" },
@@ -41,13 +41,21 @@ export async function POST(req: NextRequest) {
     const result = await genai({ mode, input: fileContent })
     console.log(result)
 
+    const { error: deleteError } = await supabase.storage
+      .from("codebases")
+      .remove([fileName])
+
+    if (deleteError) {
+      console.error("Supabase file deletion error:", deleteError)
+    }
+
     return NextResponse.json({
       success: true,
       fileUrl: signedUrl,
       [mode]: result,
     })
-  } catch {
-    console.error("API handler error:")
+  } catch (err) {
+    console.error("API handler error:", err)
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

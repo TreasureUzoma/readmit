@@ -24,35 +24,37 @@ export default function Home() {
       </svg>
 
       {/* Hero Section */}
-      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 py-24 md:py-30">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
+      <section className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 py-16 md:py-24">
+        <div className="w-full max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 tracking-tight">
             AI-powered documentation generator
           </h1>
-          <p className="text-xl text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
             Generate READMEs, contribution guides, commit messages, Dockerfiles,
             and more—automatically.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 sm:mb-16">
             <Link
               href="/docs/introduction"
               className={`${buttonVariants({
                 size: "lg",
-              })} w-[70%] font-medium`}
+              })} w-full sm:w-auto font-medium`}
             >
               Read the Documentation
             </Link>
           </div>
 
           {/* Code Example */}
-          <div className="bg-muted text-muted-foreground p-6 rounded-xl font-mono text-left max-w-2xl mx-auto mb-16 shadow-sm">
+          <div className="bg-muted text-muted-foreground p-4 sm:p-6 rounded-xl font-mono text-left max-w-full sm:max-w-2xl mx-auto mb-12 sm:mb-16 shadow-sm overflow-x-auto">
             <div className="mb-2"># Install readmit</div>
-            <div className="text-green-500">
+            <div className="text-green-500 break-all">
               $ go install github.com/treasureuzoma/readmit/readmit@latest
             </div>
             <div className="mt-4"># Generate documentation</div>
-            <div className="text-green-500">$ readmit generate readme</div>
+            <div className="text-green-500 break-all">
+              $ readmit generate readme
+            </div>
             <div className="mt-2">✓ Analyzing codebase...</div>
             <div>✓ Generated README.md</div>
           </div>
