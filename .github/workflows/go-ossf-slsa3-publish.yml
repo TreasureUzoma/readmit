@@ -3,7 +3,7 @@ name: SLSA Go releaser
 on:
   workflow_dispatch:
   release:
-    types: [created]
+    types: [published]
 
 permissions:
   contents: write
