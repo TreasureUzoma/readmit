@@ -1,0 +1,95 @@
+# Contributing to Readmit
+
+We're thrilled you're interested in contributing to Readmit! As an AI-powered documentation generator, Readmit aims to make open-source projects more accessible and maintainable. Your contributions, no matter how small, are incredibly valuable and help us improve. We welcome all forms of contributions, from reporting bugs and suggesting features to submitting code changes.
+
+By participating in this project, you agree to abide by our Code of Conduct. Please review it to understand our community standards.
+
+## How Can I Contribute?
+
+There are many ways to contribute to Readmit, and we appreciate all of them!
+
+### Reporting Bugs
+
+If you find a bug, please help us by reporting it. Good bug reports are essential for us to fix issues effectively.
+
+1.  **Check Existing Issues**: Before creating a new report, please check our [GitHub Issues](https://github.com/treasureuzoma/readmit/issues) to see if the bug has already been reported.
+2.  **Open a New Issue**: If it's a new bug, open a new issue and provide as much detail as possible:
+    - A clear and concise description of the bug.
+    - Steps to reproduce the behavior.
+    - Expected behavior.
+    - Actual behavior.
+    - Screenshots or animated GIFs (if applicable).
+    - Your operating system and any relevant Readmit version information.
+
+### Suggesting Features
+
+Do you have an idea for a new feature or an improvement to an existing one? We'd love to hear it!
+
+1.  **Check Existing Ideas**: Browse our [GitHub Issues](https://github.com/treasureuzoma/readmit/issues) to see if your idea has already been discussed.
+2.  **Open a New Issue**: If it's a new suggestion, open an issue and clearly describe your idea:
+    - A clear and concise description of the proposed feature.
+    - Why this feature would be useful to Readmit.
+    - Any potential use cases or examples.
+
+### Submitting Pull Requests
+
+Ready to dive into the code? We welcome pull requests for bug fixes, new features, and improvements.
+
+1.  **Fork the Repository**: Start by forking the [Readmit GitHub repository](https://github.com/treasureuzoma/readmit/).
+2.  **Clone Your Fork**: Clone your forked repository to your local machine:
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/readmit.git
+    cd readmit
+    ```
+3.  **Create a New Branch**: Create a new branch for your changes. Please use a descriptive name (e.g., `feat/add-new-dockerfile-template`, `fix/issue-123-readme-bug`).
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+4.  **Set Up Development Environment**:
+    - Install Go (for the CLI) and Node.js (for the web application/backend). Refer to the `README.md` for specific versions and installation instructions.
+    - Install project dependencies: `npm install` in the `web` directory.
+5.  **Make Your Changes**: Implement your bug fix or feature.
+    - Ensure your code adheres to the project's existing coding style.
+    - Add or update tests for your changes if applicable.
+    - Update documentation (e.g., `README.md`, `web/contents/docs`) to reflect your changes.
+6.  **Lint and Format**: Before committing, ensure your code is properly linted and formatted:
+    ```bash
+    npm run lint:fix # in the 'web' directory
+    npm run format   # in the 'web' directory
+    ```
+7.  **Commit Your Changes**: We encourage using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for clear and consistent commit messages. The project uses Husky pre-commit hooks to automate search data generation and enforce commit message standards.
+    ```bash
+    git commit -m "feat: Add a new useful feature"
+    # or
+    git commit -m "fix(cli): Resolve issue with file reading in the CLI"
+    ```
+8.  **Push to Your Fork**: Push your changes to your fork on GitHub:
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+9.  **Open a Pull Request**: Go to the original Readmit repository on GitHub and open a new pull request from your branch.
+    - Provide a clear and detailed description of your changes.
+    - Reference any related issues (e.g., `Closes #123`).
+    - Be responsive to feedback from maintainers.
+
+## Development Setup (for code contributions)
+
+The Readmit project consists of two main parts:
+
+- A **Go CLI** application (`readmit/`).
+- A **Next.js web application** that hosts the documentation and the AI generation API (`web/`).
+
+When contributing code, you will primarily be working in one or both of these directories.
+
+## Coding Standards
+
+- **TypeScript/JavaScript**: Follow the ESLint and Prettier configurations found in `web/.eslintrc.json` and `web/.prettierrc`.
+- **Go**: Adhere to standard Go formatting practices (`gofmt`).
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the project's MIT License.
+
+Thank you for your interest in Readmit! We look forward to your contributions and working together to build an even better documentation tool.
+
+[![Generated by Readmit](https://img.shields.io/badge/Readme%20was%20generated%20by-Readmit-brightred)](https://readmit.vercel.app)

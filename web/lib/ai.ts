@@ -31,6 +31,6 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
     },
   })
 
-  console.log("AI Response:", response.text)
+  // console.log("AI Response:", response.text)
   return response.text!
 }

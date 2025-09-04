@@ -11,7 +11,6 @@ import {
   loadfromgithub,
   rightsidebar,
   siteicon,
-  siteicondark,
   sitename,
   tableofcontent,
   totopscroll,
@@ -40,7 +39,6 @@ export const Settings = {
   title: sitename,
   metadataBase: url,
   description: description,
-  siteicondark: siteicondark,
   siteicon: siteicon,
   keywords: keywords,
   openGraph: {

@@ -11,7 +11,7 @@ import (
 
 func GetSignedUrl(fileName string) (string, error) {
 	body := fmt.Sprintf(`{"path":"%s"}`, fileName)
-	resp, err := http.Post("https://readmit.vercel.app/api/upload-url", "application/json", strings.NewReader(body))
+	resp, err := http.Post("http://localhost:3000/api/upload-url", "application/json", strings.NewReader(body))
 	if err != nil {
 		return "", err
 	}
@@ -54,7 +54,7 @@ func UploadFile(url string, fileBuffer *bytes.Buffer) error {
 func CallGenerateAPI(fileName, mode string) (string, error) {
 	body := fmt.Sprintf(`{"fileName":"%s","mode":"%s"}`, fileName, mode)
 
-	resp, err := http.Post("https://readmit.vercel.app/api/generate", "application/json", strings.NewReader(body))
+	resp, err := http.Post("http://localhost:3000/api/generate", "application/json", strings.NewReader(body))
 	if err != nil {
 		return "", err
 	}

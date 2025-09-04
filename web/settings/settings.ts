@@ -1,6 +1,5 @@
 export const url = "https://supametricsdocs.vercel.app"
-export const siteicon = "/icon.png"
-export const siteicondark = "/icon-dark.png"
+export const siteicon = "/images/icon.png"
 
 export const gtm = "GTM-XXXXXXX"
 export const gtmconnected = true

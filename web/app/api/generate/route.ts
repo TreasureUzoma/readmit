@@ -1,25 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 
-import { supabaseAnonKey, supabaseUrl } from "@/config/supabase-config"
+import { supabaseServiceRoleKey, supabaseUrl } from "@/config/supabase-config"
 import { genai } from "@/lib/ai"
 
 export async function POST(req: NextRequest) {
   try {
     const { fileName, mode } = await req.json()
 
-    if (!fileName) {
+    if (!fileName)
       return NextResponse.json(
         { error: "fileName is required" },
         { status: 400 }
       )
-    }
-    if (!mode) {
+    if (!mode)
       return NextResponse.json({ error: "mode is required" }, { status: 400 })
-    }
 
-    const supabase = createClient(supabaseUrl, supabaseAnonKey)
+    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey)
 
+    // Generate signed URL
     const { data, error } = await supabase.storage
       .from("codebases")
       .createSignedUrl(fileName, 60)
@@ -35,19 +36,39 @@ export async function POST(req: NextRequest) {
     const signedUrl = data.signedUrl
     console.log("Generated signed URL:", signedUrl)
 
+    // Fetch file content
     const fileResponse = await fetch(signedUrl)
     const fileContent = await fileResponse.text()
 
+    // Send to AI
     const result = await genai({ mode, input: fileContent })
     console.log(result)
 
-    const { error: deleteError } = await supabase.storage
+    // List files in bucket
+    const { data: fileList, error: listError } = await supabase.storage
       .from("codebases")
-      .remove([fileName])
+      .list("", { limit: 20 })
 
-    if (deleteError) {
-      console.error("Supabase file deletion error:", deleteError)
+    let deleteError: any = null
+
+    if (fileList && fileList.length > 0) {
+      const fileNames = fileList.map((file: any) => file.name)
+
+      const { data: deleteData, error } = await supabase.storage
+        .from("codebases")
+        .remove(fileNames)
+
+      deleteError = error
+      console.log(
+        "Detected files from Supabase storage:",
+        fileNames,
+        deleteData,
+        deleteError
+      )
+      console.log("Deleted file from Supabase storage:", fileNames)
     }
+
+    if (deleteError) console.error("Supabase file deletion error:", deleteError)
 
     return NextResponse.json({
       success: true,

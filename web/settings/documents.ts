@@ -1,25 +1,25 @@
-import { Paths } from "@/lib/pageroutes";
+import { Paths } from "@/lib/pageroutes"
 
 export const Documents: Paths[] = [
-    {
-        title: "Introduction",
-        href: "/introduction",
-        heading: "Getting started",
-        items: [
-            {
-                title: "Installation",
-                href: "/installation"
-            },
-            {
-                title: "Setup",
-                href: "/setup"
-            },
-            {
-                title: "Viewing Analytics",
-                href: "/viewanalytics"
-            }
-        ]
-    } /*
+  {
+    title: "Introduction",
+    href: "/introduction",
+    heading: "Getting started",
+    items: [
+      {
+        title: "Installation",
+        href: "/installation",
+      },
+      {
+        title: "Setup",
+        href: "/setup",
+      },
+      {
+        title: "Flags",
+        href: "/flags",
+      },
+    ],
+  } /*
     {
         spacer: true
     },
@@ -96,5 +96,5 @@ export const Documents: Paths[] = [
             }
         ]
     }
-    */
-];
+    */,
+]
