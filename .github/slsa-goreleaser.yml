@@ -1,7 +1,9 @@
 project_name: readmit
 
 builds:
-  - main: ./cli
+  - id: cli
+    dir: ./cli
+    main: ./main.go
     env:
       - CGO_ENABLED=0
     goos: [linux, darwin, windows]
@@ -9,11 +11,15 @@ builds:
     binary: readmit
 
 archives:
-  - format: tar.gz
+  - id: default
+    format: tar.gz
     name_template: "{{ .ProjectName }}-{{ .Version }}-{{ .Os }}-{{ .Arch }}"
     files:
       - LICENSE
       - README.md
+
+checksum:
+  name_template: "{{ .ProjectName }}-{{ .Version }}-checksums.txt"
 
 release:
   github:
