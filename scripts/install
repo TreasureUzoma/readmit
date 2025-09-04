@@ -1,10 +1,11 @@
+#!/usr/bin/env bash
 set -e
 
 VERSION=${VERSION:-latest}
 OWNER=TreasureUzoma
 REPO=readmit
 
-echo "Installing $REPO ($VERSION)..."
+echo "📦 Installing $REPO ($VERSION)..."
 
 if [ "$VERSION" = "latest" ]; then
   VERSION=$(curl -s https://api.github.com/repos/$OWNER/$REPO/releases/latest \
@@ -25,4 +26,4 @@ tar -xzf "$TARBALL"
 sudo mv $REPO /usr/local/bin/
 rm "$TARBALL"
 
-echo "Installed $REPO $VERSION to /usr/local/bin"
+echo "✅ Installed $REPO $VERSION to /usr/local/bin"
