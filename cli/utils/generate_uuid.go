@@ -11,5 +11,6 @@ func GenerateUUID() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	// Return the UUID as a hexadecimal string
 	return hex.EncodeToString(uuid), nil
 }
