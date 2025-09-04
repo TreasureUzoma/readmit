@@ -49,7 +49,7 @@ export default function Home() {
           <div className="bg-muted text-muted-foreground p-6 rounded-xl font-mono text-left max-w-2xl mx-auto mb-16 shadow-sm">
             <div className="mb-2"># Install readmit</div>
             <div className="text-green-500">
-              $ go install github.com/treasureuzoma/readmit/cli@latest
+              $ go install github.com/treasureuzoma/readmit/readmit@latest
             </div>
             <div className="mt-4"># Generate documentation</div>
             <div className="text-green-500">$ readmit generate readme</div>

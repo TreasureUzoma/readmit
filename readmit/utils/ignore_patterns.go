@@ -3,6 +3,8 @@ package utils
 // IgnorePatterns is a comprehensive list of files and directories
 // that should be skipped when reading project files.
 var IgnorePatterns = []string{
+
+	"ReadMe.md", "README.MD", "readme.md", "ReadMe.MD", "Readme.md", "readme.MD", // common readme variations
 	// Package manager dirs
 	"node_modules", "bower_components", "jspm_packages", "vendor", "Pods", "target",
 
