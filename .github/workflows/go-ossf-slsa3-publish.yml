@@ -12,12 +12,29 @@ permissions:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
       actions: read
-    uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v2.0.0
-    with:
-      go-version: "1.25"
-      config-file: ./.github/slsa-goreleaser.yml
-      workdir: ./cli
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine if 'cli' directory was changed
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            cli:
+              - 'cli/**'
+              - '.github/slsa-goreleaser.yml'
+
+      - name: Build and publish
+        if: steps.filter.outputs.cli == 'true'
+        uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v2.0.0
+        with:
+          go-version: "1.25"
+          config-file: ./.github/slsa-goreleaser.yml
