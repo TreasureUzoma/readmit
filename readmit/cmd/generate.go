@@ -23,22 +23,31 @@ var generateCmd = &cobra.Command{
 	- readme 		 Generates README.md
 	- contribution 	 Generates CONTRIBUTION.md
 	- commit 		 Suggests commit message (printed to console)
+	- watchtower Picks up all vulnerbilities found and creates a report.md file
 	- other 		 Creates <other>-<uuid>.txt`,
 	Example: `	readmit generate readme
 				readmit generate contribution
 				readmit generate commit`,
-	Args:  cobra.ExactArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(`
-    _
-   / \
-  |° _|
-  \_/
-  `)
+		fmt.Print(`
+  o__ __o         o__ __o__/_          o           o__ __o        o          o   __o__  ____o__ __o____ 
+ <|     v\       <|    v              <|>         <|     v\      <|\        /|>    |     /   \   /   \  
+ / \     <\      < >                  / \         / \     <\     / \\o    o// \   / \         \o/       
+ \o/     o/       |                 o/   \o       \o/       \o   \o/ v\  /v \o/   \o/          |        
+  |__  _<|        o__/_            <|__ __|>       |         |>   |   <\/>   |     |          < >       
+  |       \       |                /       \      / \       //   / \        / \   < >          |        
+ <o>       \o    <o>             o/         \o    \o/      /     \o/        \o/    |           o        
+  |         v\    |             /v           v\    |      o       |          |     o          <|        
+ / \         <\  / \  _\o__/_  />             <\  / \  __/>      / \        / \  __|>_        / \       
+                                                                                                        
+                                                                                                        
+                                                                                                        
+`)
 		time.Sleep(500 * time.Millisecond)
 
 		fileType := strings.ToLower(args[0])
-		validTypes := map[string]bool{"readme": true, "contribution": true, "commit": true}
+		validTypes := map[string]bool{"readme": true, "contribution": true, "commit": true, "watchtower": true}
 		if !validTypes[fileType] {
 			log.Printf("[ERROR] Unsupported type: %s (valid: readme, contribution, commit)", fileType)
 		}
@@ -90,7 +99,7 @@ var generateCmd = &cobra.Command{
 
 		signedUrl, err := remote.GetSignedUrl(fileName)
 		if err != nil {
-			log.Printf("[ERROR] Failed to get signed URL: %v", err)
+			log.Printf("[ERROR] Failed to Upload codebase to AI: %v", err)
 		}
 
 		if err := remote.UploadFile(signedUrl, fileBuffer); err != nil {
@@ -103,6 +112,7 @@ var generateCmd = &cobra.Command{
 		generatedContent, err := remote.CallGenerateAPI(fileName, fileType)
 		if err != nil {
 			log.Printf("[ERROR] Generate API failed: %v", err)
+			log.Println("Could be your version, please reupdate")
 		}
 
 		switch fileType {

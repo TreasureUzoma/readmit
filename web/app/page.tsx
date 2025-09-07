@@ -96,19 +96,14 @@ export default function Home() {
                   "Auto-generated API docs from your route handlers and endpoints",
               },
               {
-                title: "License",
-                description:
-                  "License information and guidelines for your project",
-                comingSoon: true,
+                title: "Vulnerabilty Reports",
+                description: "Report showiwng all your codebase vulnerbility",
               },
             ].map((feature, index) => (
               <div
                 key={index}
                 className="rounded-xl border border-border p-6 bg-card hover:bg-accent hover:text-accent-foreground transition-colors duration-200 shadow-sm"
               >
-                <span className="text-sm text-muted-foreground">
-                  {feature.comingSoon && "Coming Soon"}
-                </span>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
