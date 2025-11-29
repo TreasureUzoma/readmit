@@ -1,32 +1,28 @@
 ---
 title: Installation
-description: This guide covers how to install readmit.
-keywords: ["installation", "github", "install readmit"]
+description: How to install Readmit on your machine.
 ---
 
-To install and use readmit for your projects, follow this steps:
+## Automatic Installation
 
-## Prerequisites (GO)
+The easiest way to install Readmit is using the automatic install scripts.
 
-<Step>
-<StepItem title="System Requirements">
-
-- **Go:** Make sure you have Go installed. The project uses `go`. Install [Go](https://go.dev) here.
-
-To verify installation, run:
+### Linux & macOS
 
 ```bash
-go
+curl -sSfL https://raw.githubusercontent.com/treasureuzoma/readmit/main/scripts/install.sh | sh
 ```
 
-</StepItem>
-<StepItem title="readmit">
-To install readmit, run this command:
+### Windows
 
-```bash
-go install github.com/treasureuzoma/readmit/readmit@latest
+```powershell
+iwr -useb https://raw.githubusercontent.com/treasureuzoma/readmit/main/scripts/install.ps1 | iex
 ```
 
-</StepItem>
+## Manual Installation
 
-</Step>
+You can also download the binaries directly from the [GitHub Releases](https://github.com/treasureuzoma/readmit/releases) page.
+
+1. Download the binary for your OS and architecture.
+2. Rename it to `readmit` (or `readmit.exe` on Windows).
+3. Move it to a directory in your system `PATH`.

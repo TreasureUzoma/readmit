@@ -46,17 +46,19 @@ export default function Home() {
           </div>
 
           {/* Code Example */}
-          <div className="bg-muted text-muted-foreground p-4 sm:p-6 rounded-xl font-mono text-left max-w-full sm:max-w-2xl mx-auto mb-12 sm:mb-16 shadow-sm overflow-x-auto">
-            <div className="mb-2"># Install readmit</div>
-            <div className="text-green-500 break-all">
-              $ go install github.com/treasureuzoma/readmit/readmit@latest
-            </div>
-            <div className="mt-4"># Generate documentation</div>
+          <div className="bg-muted text-muted-foreground p-4 sm:p-6 rounded-xl font-mono text-left max-w-full sm:max-w-3xl mx-auto mb-12 sm:mb-16 shadow-sm overflow-x-auto">
+            <div className="mb-2"># Generate a README</div>
             <div className="text-green-500 break-all">
               $ readmit generate readme
             </div>
-            <div className="mt-2">✓ Analyzing codebase...</div>
-            <div>✓ Generated README.md</div>
+            <div className="mt-4"># Generate a commit message</div>
+            <div className="text-green-500 break-all">
+              $ readmit generate commit
+            </div>
+            <div className="mt-4"># Generate contribution guide</div>
+            <div className="text-green-500 break-all">
+              $ readmit generate contribution
+            </div>
           </div>
         </div>
       </section>

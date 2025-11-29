@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build Binaries
+        working-directory: ./readmit
+        run: |
+          mkdir -p ../dist
+
+          # Linux amd64
+          GOOS=linux GOARCH=amd64 go build -o ../dist/readmit-linux-amd64 main.go
+
+          # Linux arm64
+          GOOS=linux GOARCH=arm64 go build -o ../dist/readmit-linux-arm64 main.go
+
+          # Windows amd64
+          GOOS=windows GOARCH=amd64 go build -o ../dist/readmit-windows-amd64.exe main.go
+
+          # macOS amd64
+          GOOS=darwin GOARCH=amd64 go build -o ../dist/readmit-darwin-amd64 main.go
+
+          # macOS arm64
+          GOOS=darwin GOARCH=arm64 go build -o ../dist/readmit-darwin-arm64 main.go
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/readmit-linux-amd64
+            dist/readmit-linux-arm64
+            dist/readmit-windows-amd64.exe
+            dist/readmit-darwin-amd64
+            dist/readmit-darwin-arm64
+          generate_release_notes: true
