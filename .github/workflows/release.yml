@@ -41,6 +41,9 @@ jobs:
           # macOS arm64
           GOOS=darwin GOARCH=arm64 go build -o ../dist/readmit-darwin-arm64 main.go
 
+          # Linux arm (32-bit)
+          GOOS=linux GOARCH=arm go build -o ../dist/readmit-linux-arm main.go
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -50,4 +53,5 @@ jobs:
             dist/readmit-windows-amd64.exe
             dist/readmit-darwin-amd64
             dist/readmit-darwin-arm64
+            dist/readmit-linux-arm
           generate_release_notes: true

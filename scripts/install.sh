@@ -28,6 +28,9 @@ case "$ARCH" in
     aarch64|arm64)
         ARCH="arm64"
         ;;
+    armv7l|armv8l|armhf)
+        ARCH="arm"
+        ;;
     *)
         echo "Unsupported Architecture: $ARCH"
         exit 1
@@ -43,7 +46,16 @@ curl -sL -o "$BINARY" "$URL"
 
 # Install
 chmod +x "$BINARY"
-echo "Installing to /usr/local/bin..."
-sudo mv "$BINARY" /usr/local/bin/
+
+# Check for Termux
+if [ -n "$TERMUX_VERSION" ]; then
+    INSTALL_DIR="$PREFIX/bin"
+    echo "Installing to $INSTALL_DIR (Termux)..."
+    mv "$BINARY" "$INSTALL_DIR/"
+else
+    INSTALL_DIR="/usr/local/bin"
+    echo "Installing to $INSTALL_DIR..."
+    sudo mv "$BINARY" "$INSTALL_DIR/"
+fi
 
 echo "Successfully installed $BINARY!"
