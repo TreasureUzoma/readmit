@@ -40,13 +40,65 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
     throw new Error(`Unsupported mode: ${mode}`)
   }
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: systemInstruction + `Here is the codebase url: ${input}`,
-    config: {
-      tools: [{ urlContext: {} }],
-    },
-  })
+  const modelsToTry = [
+    "gemini-2.5-pro",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+  ]
+  let lastError: any = null
 
-  return response.text!
+  for (const model of modelsToTry) {
+    let attempts = 0
+    const maxAttempts = 3
+
+    console.log(`Attempting to generate content using model: ${model}`)
+
+    while (attempts < maxAttempts) {
+      try {
+        const response = await ai.models.generateContent({
+          model: model,
+          contents: systemInstruction + `Here is the codebase url: ${input}`,
+          config: {
+            tools: [{ urlContext: {} }],
+          },
+        })
+
+        return response.text!
+      } catch (error: any) {
+        lastError = error
+        attempts++
+
+        // Check for 503 or overload message
+        const isOverloaded =
+          error.status === 503 ||
+          error.message?.includes("overloaded") ||
+          error.message?.includes("UNAVAILABLE")
+
+        if (!isOverloaded) {
+          // If it's not an overload error (e.g., bad request), don't retry this model, maybe don't even try others?
+          // For now, let's assume we should try other models only if it's an overload/availability issue.
+          // If it's a 400, it's likely the input, so fail hard.
+          if (error.status === 400) throw error
+        }
+
+        if (attempts >= maxAttempts) {
+          console.warn(
+            `Model ${model} failed after ${maxAttempts} attempts. Switching to next model...`
+          )
+          break // Break retry loop, continue to next model
+        }
+
+        console.warn(
+          `Gemini API (${model}) overloaded (Attempt ${attempts}/${maxAttempts}). Retrying in ${Math.pow(2, attempts)}s...`
+        )
+        // Exponential backoff: 2s, 4s
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1000 * Math.pow(2, attempts))
+        )
+      }
+    }
+  }
+
+  throw lastError || new Error("All models failed to generate content")
 }
