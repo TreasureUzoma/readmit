@@ -46,7 +46,7 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
     "gemini-2.5-flash-lite",
     "gemini-2.0-flash",
   ]
-  let lastError: any = null
+  let lastError: unknown = null
 
   for (const model of modelsToTry) {
     let attempts = 0
@@ -65,21 +65,21 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
         })
 
         return response.text!
-      } catch (error: any) {
+      } catch (error: unknown) {
         lastError = error
         attempts++
 
         // Check for 503 or overload message
         const isOverloaded =
-          error.status === 503 ||
-          error.message?.includes("overloaded") ||
-          error.message?.includes("UNAVAILABLE")
+          (error as { status?: number })?.status === 503 ||
+          (error as { message?: string })?.message?.includes("overloaded") ||
+          (error as { message?: string })?.message?.includes("UNAVAILABLE")
 
         if (!isOverloaded) {
           // If it's not an overload error (e.g., bad request), don't retry this model, maybe don't even try others?
           // For now, let's assume we should try other models only if it's an overload/availability issue.
           // If it's a 400, it's likely the input, so fail hard.
-          if (error.status === 400) throw error
+          if ((error as { status?: number })?.status === 400) throw error
         }
 
         if (attempts >= maxAttempts) {
