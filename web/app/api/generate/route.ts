@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     console.log(result)
 
     // List files in bucket
-    const { data: fileList, error: listError } = await supabase.storage
+    const { data: fileList } = await supabase.storage
       .from("codebases")
       .list("", { limit: 20 })
 
