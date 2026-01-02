@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"github.com/treasureuzoma/readmit/readmit/utils"
 )
@@ -51,6 +52,32 @@ func getGitUser() map[string]string {
 func ReadFiles() map[string]string {
 	filesData := make(map[string]string)
 
+	// Parse .gitignore if it exists
+	var gitIgnorePatterns []string
+	if data, err := os.ReadFile(".gitignore"); err == nil {
+		lines := strings.Split(string(data), "\n")
+		for _, line := range lines {
+			line = strings.TrimSpace(line)
+			if line == "" || strings.HasPrefix(line, "#") {
+				continue
+			}
+			gitIgnorePatterns = append(gitIgnorePatterns, line)
+		}
+	}
+
+	// Helper to check if a path is ignored
+	isIgnored := func(path string) bool {
+		// Checks against default patterns
+		if matchIgnore(path, utils.IgnorePatterns) {
+			return true
+		}
+		// Checks against .gitignore patterns
+		if matchIgnore(path, gitIgnorePatterns) {
+			return true
+		}
+		return false
+	}
+
 	err := filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			log.Printf("Error accessing %s: %v", path, err)
@@ -62,14 +89,21 @@ func ReadFiles() map[string]string {
 			relPath = rel
 		}
 
+		// Handle explicit ignoring of everything in a folder if "*" is present in gitignore
+		// But here we rely on the matchIgnore function to handle glob patterns like "somefolder/*" or just "*"
+
 		if info.IsDir() {
-			if matchIgnore(relPath, utils.IgnorePatterns) {
+			if isIgnored(relPath) {
+				return filepath.SkipDir
+			}
+			// Special handling for node_modules if not caught by patterns
+			if info.Name() == "node_modules" {
 				return filepath.SkipDir
 			}
 			return nil
 		}
 
-		if matchIgnore(relPath, utils.IgnorePatterns) {
+		if isIgnored(relPath) {
 			return nil
 		}
 

@@ -4,8 +4,20 @@ description: Use custom flags for readmit
 keywords: ["flags"]
 ---
 
-## Comming soon!
+## Available Flags
 
-This feature is currently under development.
+### `generate commit` Flags
+
+#### `--with-commit`
+
+- **Description**: Automatically stages all changes (`git add .`) and commits them using the AI-generated message.
+- **Example**:
+  ```bash
+  readmit generate commit --with-commit
+  ```
+
+### General Behavior
+
+- **.gitignore**: Readmit now automatically detects and respects your `.gitignore` file. It skips any files listed there and handles patterns like `node_modules/` or `*` (which ignores the whole directory content).
 
 Thanks for trying us out 🤍.

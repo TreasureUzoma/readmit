@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -16,6 +17,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+
+var withCommit bool
+
 var generateCmd = &cobra.Command{
 	Use:   "generate [type]",
 	Short: "Generate files like README, CONTRIBUTION guide, or commit messages",
@@ -23,11 +27,12 @@ var generateCmd = &cobra.Command{
 	- readme 		 Generates README.md
 	- contribution 	 Generates CONTRIBUTION.md
 	- commit 		 Suggests commit message (printed to console)
-	- watchtower Picks up all vulnerbilities found and creates a report.md file
-	- other 		 Creates <other>-<uuid>.txt`,
+	- watchtower Picks up all vulnerbilities found and creates a report.md file`,
 	Example: `	readmit generate readme
 				readmit generate contribution
-				readmit generate commit`,
+				readmit generate commit
+				readmit generate commit --with-commit
+				readmit watchtower`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print(`
@@ -94,16 +99,18 @@ var generateCmd = &cobra.Command{
 			fileBuffer = bytes.NewBufferString(contentBuilder.String())
 		}
 
-		fmt.Printf("✓ Uploading files to remote storage...\n")
+		fmt.Printf("✓ Feeding codebase to Readmit AI...\n")
 		time.Sleep(1 * time.Second)
 
 		signedUrl, err := remote.GetSignedUrl(fileName)
 		if err != nil {
 			log.Printf("[ERROR] Failed to Upload codebase to AI: %v", err)
+			os.Exit(1)
 		}
 
 		if err := remote.UploadFile(signedUrl, fileBuffer); err != nil {
 			log.Printf("[ERROR] Failed to upload file: %v", err)
+			os.Exit(1)
 		}
 
 		fmt.Printf("✓ Generating %s content...\n", fileType)
@@ -111,8 +118,8 @@ var generateCmd = &cobra.Command{
 
 		generatedContent, err := remote.CallGenerateAPI(fileName, fileType)
 		if err != nil {
-			log.Printf("[ERROR] Generate API failed: %v", err)
-			log.Println("Could be your version, please reupdate")
+			// Stop the process if the request fails
+			log.Fatalf("[ERROR] Generate API failed: %v. Could be your version, please reupdate", err)
 		}
 
 		switch fileType {
@@ -130,7 +137,27 @@ var generateCmd = &cobra.Command{
 
 		case "commit":
 			fmt.Println(generatedContent)
-			fmt.Println("✓ Commit message generated and printed to console.")
+			if withCommit {
+				fmt.Println("Running git add . and git commit...")
+				// Git add .
+				addCmd := exec.Command("git", "add", ".")
+				if err := addCmd.Run(); err != nil {
+					log.Printf("[ERROR] Failed to run git add .: %v", err)
+					return
+				}
+
+				// Git commit
+				commitCmd := exec.Command("git", "commit", "-m", generatedContent)
+				commitCmd.Stdout = os.Stdout
+				commitCmd.Stderr = os.Stderr
+				if err := commitCmd.Run(); err != nil {
+					log.Printf("[ERROR] Failed to run git commit: %v", err)
+					return
+				}
+				fmt.Println("✓ Changes committed successfully.")
+			} else {
+				fmt.Println("✓ Commit message generated and printed to console.")
+			}
 
 		default:
 			if err := os.WriteFile(fileName, []byte(generatedContent), 0644); err != nil {
@@ -142,5 +169,6 @@ var generateCmd = &cobra.Command{
 }
 
 func init() {
+	generateCmd.Flags().BoolVar(&withCommit, "with-commit", false, "Automatically commit changes with the generated message")
 	rootCmd.AddCommand(generateCmd)
 }

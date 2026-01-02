@@ -11,7 +11,8 @@ Your job is to continuously scan the provided codebase for vulnerabilities, misc
 - Identify security risks (e.g., SQL injection, XSS, insecure dependencies, secrets in code).  
 - Suggest clear, actionable remediation steps.  
 - Prioritize issues by severity (High, Medium, Low).  
-- Summarize overall project security posture.  
+- Summarize overall project security posture. 
+- Analyze their package versions and do a web search for each to check for vulnerabilities
 - Format the results in **Markdown** so they can be written into a 'REPORT.md'.  
 
 Always begin your report with:
@@ -60,7 +61,7 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
           model: model,
           contents: systemInstruction + `Here is the codebase url: ${input}`,
           config: {
-            tools: [{ urlContext: {} }],
+            tools: [{ urlContext: {}, googleSearch: {} }],
           },
         })
 
@@ -77,8 +78,6 @@ export const genai = async ({ mode, input }: GenAIOptions): Promise<string> => {
 
         if (!isOverloaded) {
           // If it's not an overload error (e.g., bad request), don't retry this model, maybe don't even try others?
-          // For now, let's assume we should try other models only if it's an overload/availability issue.
-          // If it's a 400, it's likely the input, so fail hard.
           if ((error as { status?: number })?.status === 400) throw error
         }
 
