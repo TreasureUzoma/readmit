@@ -12,6 +12,7 @@ Readmit is a powerful tool designed to streamline your documentation process by 
 - **Smart Codebase Analysis:** The CLI intelligently reads and processes your project files, automatically ignoring irrelevant content such as build artifacts, node modules, `.git` directories, temporary files, and various media files.
 - **.gitignore Support:** It now respects your project's `.gitignore` rules, ensuring ignored files/folders (including `node_modules` and glob patterns like `*`) are never sent for analysis.
 - **Automated Commit Execution:** Use the `--with-commit` flag to automatically stage and commit changes with the AI-generated message.
+- **Simple Pushing:** Use `readmit push` to quickly push your changes to origin without typing long git commands.
 - **Scalable AI Integration:** Utilizes the Google GenAI service on the backend for robust and intelligent content generation.
 
 ## Stacks / Technologies
@@ -65,6 +66,7 @@ readmit generate [type]
 - `commit`: Generates a commit message and prints it to the console (based on your Git diff).
 - `dockerfile`: Generates an optimized `Dockerfile` for your project.
 - `watchtower`: Scans for vulnerabilities and generates a `REPORT.md` file.
+- `push`: Pushes changes to origin (current or specified branch).
 
 ### Examples:
 
@@ -102,6 +104,14 @@ readmit generate dockerfile
 
 ```bash
 readmit watchtower
+```
+
+**Push changes to origin:**
+
+```bash
+readmit push
+# or specify a branch
+readmit push main
 ```
 
 ## Contributing
