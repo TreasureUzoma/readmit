@@ -38,7 +38,11 @@ and prints and creates a REPORT.md.`,
 
 		var fileBuffer *bytes.Buffer
 		var contentBuilder strings.Builder
-		contentMap := controllers.ReadFiles()
+		contentMap, err := controllers.ReadFiles()
+		if err != nil {
+			log.Printf("[ERROR] %v", err)
+			return
+		}
 		for filename, fileContent := range contentMap {
 			contentBuilder.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", filename, fileContent))
 		}

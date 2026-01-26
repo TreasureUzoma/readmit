@@ -30,10 +30,9 @@ Examples:
 	SilenceUsage:               true,
 	SilenceErrors:              false,
 	SuggestionsMinimumDistance: 1,
-	Version:                    "0.6.1",
+	Version:                    "0.6.4",
 }
 
-// Execute runs the root command.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
@@ -41,7 +40,5 @@ func Execute() {
 }
 
 func init() {
-	// Remove the placeholder toggle flag
-	// Add global flags here if needed later
-	// Example: verbose logging, custom config file, etc.
+
 }

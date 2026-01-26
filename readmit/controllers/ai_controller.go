@@ -36,7 +36,10 @@ func GenerateAIContent(fileType string, includeFullCodebase bool) (string, error
 
 		if includeFullCodebase {
 			builder.WriteString("\n\n=== CODEBASE ===\n")
-			contentMap := ReadFiles()
+			contentMap, err := ReadFiles()
+			if err != nil {
+				return "", err
+			}
 			for filename, fileContent := range contentMap {
 				builder.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", filename, fileContent))
 			}
@@ -45,7 +48,10 @@ func GenerateAIContent(fileType string, includeFullCodebase bool) (string, error
 		fileBuffer = bytes.NewBufferString(builder.String())
 	} else {
 		var contentBuilder strings.Builder
-		contentMap := ReadFiles()
+		contentMap, err := ReadFiles()
+		if err != nil {
+			return "", err
+		}
 		for filename, fileContent := range contentMap {
 			contentBuilder.WriteString(fmt.Sprintf("=== %s ===\n%s\n\n", filename, fileContent))
 		}
