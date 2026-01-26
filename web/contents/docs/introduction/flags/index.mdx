@@ -6,18 +6,12 @@ keywords: ["flags"]
 
 ## Available Flags
 
-### `generate commit` Flags
+### `generate docs` Flags
 
-#### `--with-commit`
+#### `--single-file`
 
-- **Description**: Automatically stages all changes (`git add .`) and commits them using the AI-generated message.
+- **Description**: Generates all documentation into a single `docs.md` file rather than creating a `docs/` folder with multiple files.
 - **Example**:
   ```bash
-  readmit generate commit --with-commit
+  readmit generate docs --single-file
   ```
-
-### General Behavior
-
-- **.gitignore**: Readmit now automatically detects and respects your `.gitignore` file. It skips any files listed there and handles patterns like `node_modules/` or `*` (which ignores the whole directory content).
-
-Thanks for trying us out 🤍.

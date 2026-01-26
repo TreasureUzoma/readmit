@@ -6,13 +6,12 @@ Readmit is a powerful tool designed to streamline your documentation process by 
 
 - **Automated README.md Generation:** Generate comprehensive `README.md` files for your projects, covering essential sections like installation, usage, and project overview.
 - **Automated CONTRIBUTING.md Generation:** Create clear and professional `CONTRIBUTING.md` files to guide new contributors on how to engage with your project.
-- **Intelligent Commit Message Generation:** Get concise and conventional Git commit message suggestions based on your staged, unstaged, or last commit changes, adhering to standards like Conventional Commits.
-- **Dockerfile Generation:** Generate optimized `Dockerfile`s tailored to your project's technology stack and dependencies.
+- **Intelligent Commit Message Generation:** Get concise and conventional Git commit message suggestions based on your changes. **Optimized:** Now only sends your git diff to the AI, making it lightning fast.
+- **Smart Sync (`readmit push`):** One command to stage changes, AI-generate a commit message, commit them, and push to origin.
 - **Vulnerability Reports (`REPORT.md`):** Scan your codebase for vulnerabilities and misconfigurations, generating a structured report to help identify and remediate security risks.
 - **Smart Codebase Analysis:** The CLI intelligently reads and processes your project files, automatically ignoring irrelevant content such as build artifacts, node modules, `.git` directories, temporary files, and various media files.
 - **.gitignore Support:** It now respects your project's `.gitignore` rules, ensuring ignored files/folders (including `node_modules` and glob patterns like `*`) are never sent for analysis.
-- **Automated Commit Execution:** Use the `--with-commit` flag to automatically stage and commit changes with the AI-generated message.
-- **Simple Pushing:** Use `readmit push` to quickly push your changes to origin without typing long git commands.
+- **Command Suggestions:** Automatically detects typos and suggests the closest valid command or flag.
 - **Scalable AI Integration:** Utilizes the Google GenAI service on the backend for robust and intelligent content generation.
 
 ## Stacks / Technologies
@@ -64,9 +63,10 @@ readmit generate [type]
 - `readme`: Generates a `README.md` file in the current directory.
 - `contribution`: Generates a `CONTRIBUTING.md` file in the current directory.
 - `commit`: Generates a commit message and prints it to the console (based on your Git diff).
+- `docs`: Generates comprehensive app and API documentation.
 - `dockerfile`: Generates an optimized `Dockerfile` for your project.
 - `watchtower`: Scans for vulnerabilities and generates a `REPORT.md` file.
-- `push`: Pushes changes to origin (current or specified branch).
+- `push`: Smart Sync: Stages changes, AI-generates a commit message, commits, and pushes to origin.
 
 ### Examples:
 
@@ -88,10 +88,16 @@ readmit generate contribution
 readmit generate commit
 ```
 
-**Generate and automatically apply a commit:**
+**Generate Comprehensive Docs (Folder):**
 
 ```bash
-readmit generate commit --with-commit
+readmit generate docs
+```
+
+**Generate Comprehensive Docs (Single File):**
+
+```bash
+readmit generate docs --single-file
 ```
 
 **Generate a `Dockerfile`:**
@@ -106,11 +112,16 @@ readmit generate dockerfile
 readmit watchtower
 ```
 
-**Push changes to origin:**
+**Smart Sync (Stage, Commit, and Push):**
 
 ```bash
 readmit push
-# or specify a branch
+# This runs: git add . -> AI generate commit -> git commit -> git push
+```
+
+**Push to a specific branch:**
+
+```bash
 readmit push main
 ```
 

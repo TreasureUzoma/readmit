@@ -27,8 +27,10 @@ Examples:
   readmit generate commit
   readmit generate design-doc
 `,
-	SilenceUsage:  true,
-	SilenceErrors: true,
+	SilenceUsage:               true,
+	SilenceErrors:              false,
+	SuggestionsMinimumDistance: 1,
+	Version:                    "0.5.0",
 }
 
 // Execute runs the root command.

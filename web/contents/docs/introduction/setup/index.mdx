@@ -19,6 +19,7 @@ readmit generate [type]
 - `readme`: Generates a `README.md` file in the current directory.
 - `contribution`: Generates a `CONTRIBUTING.md` file in the current directory.
 - `commit`: Generates a commit message and prints it to the console (based on your Git diff).
+- `docs`: Generates comprehensive app and API documentation.
 - `dockerfile`: Generates an optimized `Dockerfile` for your project.
 
 ### Examples:
@@ -41,16 +42,22 @@ readmit generate contribution
 readmit generate commit
 ```
 
-**Generate and automatically apply a commit:**
-
-```bash
-readmit generate commit --with-commit
-```
-
 **Generate a `Dockerfile`:**
 
 ```bash
 readmit generate dockerfile
+```
+
+**Generate Comprehensive Docs (Folder):**
+
+```bash
+readmit generate docs
+```
+
+**Generate Comprehensive Docs (Single File):**
+
+```bash
+readmit generate docs --single-file
 ```
 
 **Generate a `REPORT.md file` (Check for vulnerabilities):**
@@ -59,10 +66,17 @@ readmit generate dockerfile
 readmit watchtower
 ```
 
-**Push changes to origin:**
+**Smart Sync (Stage, Commit, Push):**
 
 ```bash
 readmit push
+# This will: git add . -> AI generate commit msg -> git commit -> git push
+```
+
+**Push to a specific branch:**
+
+```bash
+readmit push [branch-name]
 ```
 
 Now Enjoy
