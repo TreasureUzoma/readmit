@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"github.com/treasureuzoma/readmit/readmit/cmd/remote"
+	"github.com/treasureuzoma/readmit/readmit/remote"
 	"github.com/treasureuzoma/readmit/readmit/controllers"
 	"github.com/treasureuzoma/readmit/readmit/utils"
 )
@@ -20,19 +20,8 @@ var watchtowerCmd = &cobra.Command{
 	Long: `Readmit Watchtower scans your project for vulnerabilities
 and prints and creates a REPORT.md.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-  o__ __o         o__ __o__/_          o           o__ __o        o          o   __o__  ____o__ __o____ 
- <|     v\       <|    v              <|>         <|     v\      <|\        /|>    |     /   \   /   \  
- / \     <\      < >                  / \         / \     <\     / \\o    o// \   / \         \o/       
- \o/     o/       |                 o/   \o       \o/       \o   \o/ v\  /v \o/   \o/          |        
-  |__  _<|        o__/_            <|__ __|>       |         |>   |   <\/>   |     |          < >       
-  |       \       |                /       \      / \       //   / \        / \   < >          |        
- <o>       \o    <o>             o/         \o    \o/      /     \o/        \o/    |           o        
-  |         v\    |             /v           v\    |      o       |          |     o          <|        
- / \         <\  / \  _\o__/_  />             <\  / \  __/>      / \        / \  __|>_        / \       
-                                                                                                        
-        👀 Watchtower
-`)
+		fmt.Print(Ascii)
+		fmt.Println("        👀 Watchtower")
 
 		time.Sleep(500 * time.Millisecond)
 

@@ -24,18 +24,7 @@ var pushCmd = &cobra.Command{
   readmit push main`,
 	Args: cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-  o__ __o         o__ __o__/_          o           o__ __o        o          o   __o__  ____o__ __o____ 
- <|     v\       <|    v              <|>         <|     v\      <|\        /|>    |     /   \   /   \  
- / \     <\      < >                  / \         / \     <\     / \\o    o// \   / \         \o/       
- \o/     o/       |                 o/   \o       \o/       \o   \o/ v\  /v \o/   \o/          |        
-  |__  _<|        o__/_            <|__ __|>       |         |>   |   <\/>   |     |          < >       
-  |       \       |                /       \      / \       //   / \        / \   < >          |        
- <o>       \o    <o>             o/         \o    \o/      /     \o/        \o/    |           o        
-  |         v\    |             /v           v\    |      o       |          |     o          <|        
- / \         <\  / \  _\o__/_  />             <\  / \  __/>      / \        / \  __|>_        / \       
-                                                                                                        
-`)
+		fmt.Print(Ascii)
 		time.Sleep(200 * time.Millisecond)
 
 		// 1. Git add .

@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 Readmit
+Copyright © 2026 Readmit
 */
 package cmd
 
@@ -30,7 +30,7 @@ Examples:
 	SilenceUsage:               true,
 	SilenceErrors:              false,
 	SuggestionsMinimumDistance: 1,
-	Version:                    "0.5.1",
+	Version:                    "0.6.0",
 }
 
 // Execute runs the root command.

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"strings"
 	"time"
 
@@ -16,7 +15,6 @@ import (
 
 
 var (
-	withCommit bool
 	singleFile bool
 )
 
@@ -37,20 +35,7 @@ var generateCmd = &cobra.Command{
 				readmit watchtower`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-  o__ __o         o__ __o__/_          o           o__ __o        o          o   __o__  ____o__ __o____ 
- <|     v\       <|    v              <|>         <|     v\      <|\        /|>    |     /   \   /   \  
- / \     <\      < >                  / \         / \     <\     / \\o    o// \   / \         \o/       
- \o/     o/       |                 o/   \o       \o/       \o   \o/ v\  /v \o/   \o/          |        
-  |__  _<|        o__/_            <|__ __|>       |         |>   |   <\/>   |     |          < >       
-  |       \       |                /       \      / \       //   / \        / \   < >          |        
- <o>       \o    <o>             o/         \o    \o/      /     \o/        \o/    |           o        
-  |         v\    |             /v           v\    |      o       |          |     o          <|        
- / \         <\  / \  _\o__/_  />             <\  / \  __/>      / \        / \  __|>_        / \       
-                                                                                                        
-                                                                                                        
-                                                                                                        
-`)
+		fmt.Print(Ascii)
 		time.Sleep(500 * time.Millisecond)
 
 		fileType := strings.ToLower(args[0])
@@ -61,9 +46,8 @@ var generateCmd = &cobra.Command{
 		}
 
 		fmt.Printf("✓ Analyzing codebase...\n")
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(200 * time.Millisecond)
 
-		// Optimization: Only include full codebase for non-commit types
 		includeFullCodebase := fileType != "commit"
 		
 		fmt.Printf("✓ Feeding codebase to Readmit AI...\n")
@@ -93,27 +77,7 @@ var generateCmd = &cobra.Command{
 			fmt.Println(generatedContent)
 			fmt.Println("------------------------------")
 			
-			if withCommit {
-				fmt.Println("Running git add . and git commit...")
-				// Git add .
-				addCmd := exec.Command("git", "add", ".")
-				if err := addCmd.Run(); err != nil {
-					log.Printf("[ERROR] Failed to run git add .: %v", err)
-					return
-				}
-
-				// Git commit
-				commitCmd := exec.Command("git", "commit", "-m", generatedContent)
-				commitCmd.Stdout = os.Stdout
-				commitCmd.Stderr = os.Stderr
-				if err := commitCmd.Run(); err != nil {
-					log.Printf("[ERROR] Failed to run git commit: %v", err)
-					return
-				}
-				fmt.Println("✓ Changes committed successfully.")
-			} else {
-				fmt.Println("✓ Commit message generated and printed to console.")
-			}
+			fmt.Println("✓ Commit message generated and printed to console.")
 
 		case "docs":
 			if singleFile {
@@ -174,7 +138,6 @@ var generateCmd = &cobra.Command{
 }
 
 func init() {
-	generateCmd.Flags().BoolVar(&withCommit, "with-commit", false, "Automatically commit changes with the generated message")
 	generateCmd.Flags().BoolVar(&singleFile, "single-file", false, "Generate documentation in a single docs.md file instead of a folder")
 	rootCmd.AddCommand(generateCmd)
 }

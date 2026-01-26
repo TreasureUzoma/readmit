@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/treasureuzoma/readmit/readmit/cmd/remote"
+	"github.com/treasureuzoma/readmit/readmit/remote"
 	"github.com/treasureuzoma/readmit/readmit/gitreader"
 	"github.com/treasureuzoma/readmit/readmit/utils"
 )

@@ -15,11 +15,7 @@ export function Footer() {
         </p>
         <p>
           Built with ❤️ by{" "}
-          <a
-            href="https://treasureuzoma.netlify.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="https://idolo.dev" target="_blank" rel="noopener">
             Treasure Uzoma
           </a>
         </p>
