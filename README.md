@@ -31,24 +31,39 @@ Readmit is a powerful tool designed to streamline your documentation process by 
 |             | Radix UI/Shadcn UI | [https://www.radix-ui.com/](https://www.radix-ui.com/)                 | A set of unstyled, accessible UI components used as a foundation for the Readmit documentation website's user interface.                                       |
 |             | Husky              | [https://typicode.github.io/husky/](https://typicode.github.io/husky/) | Git hooks for ensuring code quality by running scripts (like `post-process.sh` to generate `search-data/documents.json`) before committing or pushing changes. |
 
-## Installation
+## Automatic Installation
 
-To install the `readmit` CLI, ensure you have Go installed on your system (version 1.16 or higher).
+The easiest way to install Readmit is using the automatic install scripts.
 
-1.  **Install the CLI:**
+### Linux & macOS
 
-    ```bash
-    go install github.com/treasureuzoma/readmit/readmit@latest
-    ```
+```bash
+curl -sSfL https://raw.githubusercontent.com/treasureuzoma/readmit/main/scripts/install.sh | sh
+```
 
-    This command downloads the latest version of the Readmit CLI and installs the `readmit` executable in your `$GOPATH/bin` directory. Ensure your `$GOPATH/bin` is included in your system's `PATH` environment variable.
+### Windows (PowerShell)
 
-2.  **Verify Installation:**
-    You can verify the installation by running:
-    ```bash
-    readmit --help
-    ```
-    This should display the help message for the Readmit CLI.
+```powershell
+iwr -useb https://raw.githubusercontent.com/treasureuzoma/readmit/main/scripts/install.ps1 | iex
+```
+
+## Manual Installation
+
+You can also download the binaries directly from the [GitHub Releases](https://github.com/treasureuzoma/readmit/releases) page.
+
+1. Download the binary for your OS and architecture.
+2. Rename it to `readmit` (or `readmit.exe` on Windows).
+3. Move it to a directory in your system `PATH`.
+
+## Verify Installation
+
+You can verify the installation by running:
+
+```bash
+readmit --help
+```
+
+This should display the help message for the Readmit CLI.
 
 ## Usage
 

@@ -8,34 +8,34 @@ Readmit is an AI-powered documentation generator designed to streamline the proc
 
 Readmit provides a robust set of features to simplify your documentation workflow:
 
-*   **AI-Powered Content Generation**: Automatically generates a variety of documentation artifacts, such as `README.md` files, `CONTRIBUTING.md` guides, Git commit messages, and optimized Dockerfiles. Future enhancements will include API documentation and license generation.
-*   **Codebase Analysis**: Intelligently reads and understands your entire codebase, including its structure, dependencies, and common patterns, to produce accurate and relevant documentation.
-*   **Rich Content Creation**: Supports Markdown with JSX, custom components, and integrates Mermaid.js for dynamic diagrams, allowing for highly visual and interactive documentation.
-*   **Efficient Navigation**: Offers multi-level navigation, automatically generated tables of contents, and smooth pagination for an optimal browsing experience within documentation.
-*   **Code Enhancements**: Features syntax highlighting, customizable code blocks, and a code switcher with copy functionality for improved code readability and usability.
-*   **Theme & Responsiveness**: Supports both light and dark modes with automatic switching, alongside a fully responsive design for accessibility across various devices.
-*   **Mathematical Notation**: Seamlessly integrates LaTeX for rendering complex mathematical equations.
-*   **SEO Optimization**: Includes built-in SEO capabilities with metadata generation and control over meta tags to enhance search engine visibility.
-*   **Advanced Search**: Implements a fuzzy search mechanism with term highlighting, enabling users to quickly find relevant information within the documentation.
+- **AI-Powered Content Generation**: Automatically generates a variety of documentation artifacts, such as `README.md` files, `CONTRIBUTING.md` guides, Git commit messages, and optimized Dockerfiles. Future enhancements will include API documentation and license generation.
+- **Codebase Analysis**: Intelligently reads and understands your entire codebase, including its structure, dependencies, and common patterns, to produce accurate and relevant documentation.
+- **Rich Content Creation**: Supports Markdown with JSX, custom components, and integrates Mermaid.js for dynamic diagrams, allowing for highly visual and interactive documentation.
+- **Efficient Navigation**: Offers multi-level navigation, automatically generated tables of contents, and smooth pagination for an optimal browsing experience within documentation.
+- **Code Enhancements**: Features syntax highlighting, customizable code blocks, and a code switcher with copy functionality for improved code readability and usability.
+- **Theme & Responsiveness**: Supports both light and dark modes with automatic switching, alongside a fully responsive design for accessibility across various devices.
+- **Mathematical Notation**: Seamlessly integrates LaTeX for rendering complex mathematical equations.
+- **SEO Optimization**: Includes built-in SEO capabilities with metadata generation and control over meta tags to enhance search engine visibility.
+- **Advanced Search**: Implements a fuzzy search mechanism with term highlighting, enabling users to quickly find relevant information within the documentation.
 
 ## Stacks / Technologies
 
 Readmit is built using a modern and robust technology stack to ensure performance, scalability, and developer experience.
 
-| Category          | Technology                                                                                                                                                                                                                                                                                                                                                                | Link                                                               |
-| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------- |
-| **Frontend**      | Next.js, React                                                                                                                                                                                                                                                                                                                                                            | [https://nextjs.org/](https://nextjs.org/)                         |
-| **Styling**       | Tailwind CSS, `tailwindcss-animate`, `@tailwindcss/typography`                                                                                                                                                                                                                                                                                                            | [https://tailwindcss.com/](https://tailwindcss.com/)             |
-| **Language**      | TypeScript                                                                                                                                                                                                                                                                                                                                                                | [https://www.typescriptlang.org/](https://www.typescriptlang.org/) |
-| **Content**       | MDX, `next-mdx-remote`, `gray-matter`, `rehype-*`, `remark-*`, `unified`                                                                                                                                                                                                                                                                                                   | [https://mdxjs.com/](https://mdxjs.com/)                           |
-| **AI Integration**| Google GenAI (`@google/genai`)                                                                                                                                                                                                                                                                                                                                            | [https://ai.google.dev/](https://ai.google.dev/)                   |
-| **Backend/DB**    | Supabase (`@supabase/supabase-js`, `@supabase/ssr`)                                                                                                                                                                                                                                                                                                                       | [https://supabase.com/](https://supabase.com/)                     |
-| **Linting/Tools** | ESLint, Prettier, Husky                                                                                                                                                                                                                                                                                                                                                   | [https://eslint.org/](https://eslint.org/)                         |
-| **UI Components** | Radix UI (`@radix-ui/react-accordion`, `@radix-ui/react-collapsible`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-scroll-area`, `@radix-ui/react-slot`, `@radix-ui/react-tabs`) | [https://www.radix-ui.com/](https://www.radix-ui.com/)             |
-| **Icons**         | React Icons                                                                                                                                                                                                                                                                                                                                                               | [https://react-icons.github.io/react-icons/](https://react-icons.github.io/react-icons/) |
-| **Diagrams**      | Mermaid                                                                                                                                                                                                                                                                                                                                                                 | [https://mermaid.js.org/](https://mermaid.js.org/)                 |
-| **Fonts**         | Geist Sans, Geist Mono                                                                                                                                                                                                                                                                                                                                                    | [https://vercel.com/font](https://vercel.com/font)                 |
-| **SEO**           | Next.js Metadata, Google Tag Manager (`@next/third-parties/google`)                                                                                                                                                                                                                                                                                                     | [https://nextjs.org/docs/app/building-your-application/optimizing/metadata](https://nextjs.org/docs/app/building-your-application/optimizing/metadata) |
+| Category           | Technology                                                                                                                                                                                                      | Link                                                                                                                                                   |
+| :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Frontend**       | Next.js, React                                                                                                                                                                                                  | [https://nextjs.org/](https://nextjs.org/)                                                                                                             |
+| **Styling**        | Tailwind CSS, `tailwindcss-animate`, `@tailwindcss/typography`                                                                                                                                                  | [https://tailwindcss.com/](https://tailwindcss.com/)                                                                                                   |
+| **Language**       | TypeScript                                                                                                                                                                                                      | [https://www.typescriptlang.org/](https://www.typescriptlang.org/)                                                                                     |
+| **Content**        | MDX, `next-mdx-remote`, `gray-matter`, `rehype-*`, `remark-*`, `unified`                                                                                                                                        | [https://mdxjs.com/](https://mdxjs.com/)                                                                                                               |
+| **AI Integration** | Google GenAI (`@google/genai`)                                                                                                                                                                                  | [https://ai.google.dev/](https://ai.google.dev/)                                                                                                       |
+| **Backend/DB**     | Supabase (`@supabase/supabase-js`, `@supabase/ssr`)                                                                                                                                                             | [https://supabase.com/](https://supabase.com/)                                                                                                         |
+| **Linting/Tools**  | ESLint, Prettier, Husky                                                                                                                                                                                         | [https://eslint.org/](https://eslint.org/)                                                                                                             |
+| **UI Components**  | Radix UI (`@radix-ui/react-accordion`, `@radix-ui/react-collapsible`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-scroll-area`, `@radix-ui/react-slot`, `@radix-ui/react-tabs`) | [https://www.radix-ui.com/](https://www.radix-ui.com/)                                                                                                 |
+| **Icons**          | React Icons                                                                                                                                                                                                     | [https://react-icons.github.io/react-icons/](https://react-icons.github.io/react-icons/)                                                               |
+| **Diagrams**       | Mermaid                                                                                                                                                                                                         | [https://mermaid.js.org/](https://mermaid.js.org/)                                                                                                     |
+| **Fonts**          | Geist Sans, Geist Mono                                                                                                                                                                                          | [https://vercel.com/font](https://vercel.com/font)                                                                                                     |
+| **SEO**            | Next.js Metadata, Google Tag Manager (`@next/third-parties/google`)                                                                                                                                             | [https://nextjs.org/docs/app/building-your-application/optimizing/metadata](https://nextjs.org/docs/app/building-your-application/optimizing/metadata) |
 
 ## Installation
 
@@ -45,50 +45,59 @@ To get the Readmit web application up and running locally, follow these steps:
 
 Ensure you have the following installed on your system:
 
-*   **Node.js**: Version 18.x or higher.
-    ```bash
-    node -v
-    npm -v
-    ```
-*   **Git**: For cloning the repository.
-    ```bash
-    git --version
-    ```
-*   **Code Editor**: Visual Studio Code, WebStorm, or any other preferred text editor.
+- **Node.js**: Version 18.x or higher.
+  ```bash
+  node -v
+  npm -v
+  ```
+- **Git**: For cloning the repository.
+  ```bash
+  git --version
+  ```
+- **Code Editor**: Visual Studio Code, WebStorm, or any other preferred text editor.
 
 ### Steps
 
 1.  **Clone the Repository**:
+
     ```bash
     git clone https://github.com/treasureuzoma/readmit.git
     cd readmit
     ```
 
 2.  **Install Dependencies**:
+
     ```bash
     npm install
     ```
+
     This command installs all necessary project dependencies, including Next.js, React, TypeScript, Tailwind CSS, MDX components, and other development tools like ESLint and Husky.
 
 3.  **Environment Variables**:
     Create a `.env.local` file in the root directory and add your Supabase and Google GenAI API keys.
+
     ```env
     GOOGLE_GENAI_API_KEY=your_google_genai_api_key
     SUPABASE_URL=your_supabase_url
     SUPABASE_ANON_KEY=your_supabase_anon_key
     ```
+
     You can obtain these from [Google AI Studio](https://ai.google.dev/) and [Supabase](https://supabase.com/).
 
 4.  **Run the Development Server**:
+
     ```bash
     npm run dev
     ```
+
     The application will be accessible at `http://localhost:3000`.
 
 5.  **Build for Production** (Optional):
+
     ```bash
     npm run build
     ```
+
     This command generates a production-ready build of the application.
 
 6.  **Run Production Server** (Optional):
@@ -103,15 +112,23 @@ Readmit serves as a web-based platform and documentation site for an AI-powered 
 
 1.  **Browse Documentation**: Navigate through the comprehensive documentation to understand Readmit's features, setup, and usage. The sidebar provides structured navigation, while the right-hand table of contents allows for quick jumps within pages.
 2.  **Use AI Generation (via API)**: The core AI generation logic is exposed via API routes (e.g., `/api/generate`). While this repository provides the web interface, the AI capabilities are designed to be consumed programmatically or through a CLI tool.
-    *   **CLI Tool (Conceptual)**: The Readmit product is envisioned to have a CLI tool for direct integration into your development workflow. An example of its usage might look like this:
-        ```bash
-        # Install the Readmit CLI (if available)
-        $ go install github.com/treasureuzoma/readmit/readmit@latest
+    - **CLI Tool**: The Readmit CLI tool allows for direct integration into your development workflow.
 
-        # Generate a README for your current project
-        $ readmit generate readme
-        ```
-    *   **Web Interface**: Currently, this repository serves as the platform to host such documentation and provide information about the Readmit product. Future iterations might include a direct web interface for generating documentation.
+      ### Automatic Installation
+
+      ```bash
+      # Linux & macOS
+      curl -sSfL https://raw.githubusercontent.com/treasureuzoma/readmit/main/scripts/install.sh | sh
+
+      # Windows (PowerShell)
+      iwr -useb https://raw.githubusercontent.com/treasureuzoma/readmit/main/scripts/install.ps1 | iex
+      ```
+
+      ### Manual Installation
+
+      You can also download the binaries directly from the [GitHub Releases](https://github.com/treasureuzoma/readmit/releases) page.
+
+    - **Web Interface**: Currently, this repository serves as the platform to host such documentation and provide information about the Readmit product. Future iterations might include a direct web interface for generating documentation.
 
 ## Contributing
 
