@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"os"
