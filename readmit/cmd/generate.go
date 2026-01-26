@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -9,10 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/treasureuzoma/readmit/readmit/cmd/remote"
 	"github.com/treasureuzoma/readmit/readmit/controllers"
-	"github.com/treasureuzoma/readmit/readmit/gitreader"
-	"github.com/treasureuzoma/readmit/readmit/utils"
 	"path/filepath"
 
 	"github.com/spf13/cobra"
