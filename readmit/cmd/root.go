@@ -30,7 +30,7 @@ Examples:
 	SilenceUsage:               true,
 	SilenceErrors:              false,
 	SuggestionsMinimumDistance: 1,
-	Version:                    "0.6.0",
+	Version:                    "0.6.1",
 }
 
 // Execute runs the root command.

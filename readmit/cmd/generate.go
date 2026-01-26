@@ -73,9 +73,7 @@ var generateCmd = &cobra.Command{
 			fmt.Printf("✓ Successfully created CONTRIBUTION.md\n")
 
 		case "commit":
-			fmt.Println("\n-- Suggested Commit Message --")
 			fmt.Println(generatedContent)
-			fmt.Println("------------------------------")
 			
 			fmt.Println("✓ Commit message generated and printed to console.")
 
