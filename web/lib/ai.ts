@@ -26,7 +26,10 @@ Tn end with
 `,
   docs: `You are a senior technical documentation writer.
 
-Your task is to generate high-quality project documentation for a software codebase.
+Your task is to generate high-quality, high-level project documentation for the ENTIRE application as a whole.
+CRITICAL INSTRUCTION: DO NOT generate file-by-file documentation. Do not create files like 'auth.ts', 'orders.ts', etc. Instead, create logical, structured documentation files that describe the application broadly, such as 'architecture.md', 'api_reference.md', 'configuration.md', 'getting_started.md', etc.
+Do not generate a readme.md,
+do not geerate anything like credit.md, terms.md, privacy.md, etc. only generate docs
 
 Format your output exactly like this to allow the client to split them into separate files:
 
@@ -39,7 +42,7 @@ Format your output exactly like this to allow the client to split them into sepa
 ...
 
 
-The documentation must include, where applicable:
+The documentation must include, where applicable, the following broad topics:
 
 - Overview
 - Project architecture
