@@ -28,7 +28,7 @@ Tn end with
 
 Your task is to generate high-quality project documentation for a software codebase.
 
-If generating documentation for multiple files or components, format your output exactly like this to allow the client to split them into separate files:
+Format your output exactly like this to allow the client to split them into separate files:
 
 --- filename1.md ---
 # Content for filename1
