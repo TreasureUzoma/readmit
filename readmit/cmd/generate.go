@@ -25,21 +25,19 @@ var generateCmd = &cobra.Command{
 	- readme 		 Generates README.md
 	- contribution 	 Generates CONTRIBUTION.md
 	- commit 		 Suggests commit message (printed to console)
-	- watchtower Pick up all vulnerabilities found and creates a report.md file
 	- docs 		 Generates comprehensive documentation`,
 	Example: `	readmit generate readme
 				readmit generate contribution
 				readmit generate commit
 				readmit generate docs
-				readmit generate docs --single-file
-				readmit watchtower`,
+				readmit generate docs --single-file`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print(Ascii)
 		time.Sleep(500 * time.Millisecond)
 
 		fileType := strings.ToLower(args[0])
-		validTypes := map[string]bool{"readme": true, "contribution": true, "commit": true, "watchtower": true, "docs": true}
+		validTypes := map[string]bool{"readme": true, "contribution": true, "commit": true, "docs": true}
 		if !validTypes[fileType] {
 			log.Printf("[ERROR] Unsupported type: %s (valid: readme, contribution, commit, docs)", fileType)
 			return

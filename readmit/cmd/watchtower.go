@@ -28,7 +28,7 @@ and prints and creates a REPORT.md.`,
 		fmt.Println("✓ Analyzing codebase...")
 		time.Sleep(1 * time.Second)
 
-		fileType := "report" // fixed
+		fileType := "report" 
 
 		uuid, err := utils.GenerateUUID()
 		if err != nil {
