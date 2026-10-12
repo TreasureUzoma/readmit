@@ -116,6 +116,9 @@ importers:
       supabase:
         specifier: ^2.39.2
         version: 2.39.2
+      supametrics:
+        specifier: ^1.0.2
+        version: 1.0.2(react@19.2.3)
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.6.0
@@ -3636,6 +3639,11 @@ packages:
     resolution: {integrity: sha512-/LDPMDIDmuDwj3UsKVw+wA+uHF7QhEF8xgJnKpnk1vqVdr+lA6xRSwWQzgaNuwPj5YPt6+78JKp+wzKziTsRVw==}
     engines: {npm: '>=8'}
     hasBin: true
+
+  supametrics@1.0.2:
+    resolution: {integrity: sha512-cqNbXRU3P7d4YPPLmmwpMGhF2i26NCwwnI6MxQZaD7gJrBzk8UVS4KV8uxgyhXYzLFuQhFGGEw66XmdZWI4sEg==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -8117,6 +8125,10 @@ snapshots:
       tar: 7.4.3
     transitivePeerDependencies:
       - supports-color
+
+  supametrics@1.0.2(react@19.2.3):
+    dependencies:
+      react: 19.2.3
 
   supports-color@7.2.0:
     dependencies:

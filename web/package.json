@@ -50,6 +50,7 @@
     "remark-stringify": "^11.0.0",
     "sanitize-html": "^2.14.0",
     "supabase": "^2.39.2",
+    "supametrics": "^1.0.2",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "unified": "^11.0.5",
